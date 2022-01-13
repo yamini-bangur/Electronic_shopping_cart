@@ -62,7 +62,6 @@ export default {
 		if (this.selectedProduct === undefined) {
 			this.loadProduct()
 		} else {
-			console.log(this.selectedProduct)
 			this.getSrc()
 		}
 	},
