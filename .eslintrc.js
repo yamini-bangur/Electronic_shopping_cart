@@ -1,10 +1,13 @@
 module.exports = {
     "env": {
-        "browser": true
+        "browser": true,
+        "es2021": true,
+        "node": true
     },
     "extends": "plugin:vue/essential",
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": 13,
+        "sourceType": "module"
     },
     "plugins": [
         "vue"
