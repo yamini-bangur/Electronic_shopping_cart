@@ -10,7 +10,7 @@
     <div id="imageSection">
       <img
         id="imgDetails"
-        :src="`${siteUrl}/uploads/${selectedProduct.images[0].img}`"
+        :src="src" @error="defaultImage"
       />
     </div>
     <div id="productDetails">
@@ -26,10 +26,12 @@
         <h3>Product Preview</h3>
         <img v-for="image in selectedProduct.images" :key="image.id"
           :id="image.id"
-          :src="`${siteUrl}/uploads/${image.img}`"
+          :src="`${siteUrl}/uploads/${image.img}`" @error="defaultImage"
         />
       </div>
-      <div id="button"><button>Add to Cart</button></div>
+      <div id="button"><base-button>Add to Cart</base-button>
+		<base-button :to="editProduct()" mode="flat" link> <i class="fas fa-edit editProduct"></i></base-button>
+		</div>
     </div>
   </div>
 </div>
@@ -37,32 +39,46 @@
 <script>
 import BaseDialog from '../components/UI/BaseDialog.vue'
 import BaseSpinner from '../components/UI/BaseSpinner.vue'
+import BaseButton from '../components/UI/BaseButton.vue'
 export default {
 	props: ['id'],
 	components: {
     BaseDialog,
-    BaseSpinner
+	BaseSpinner,
+	BaseButton
   },
 	data () {
 		return {
 			selectedProduct: null,
 			isLoading: false,
 			error: null,
-			siteUrl: ''
+			siteUrl: '',
+			src: ''
 		}
 	},
-	created () {
+	async created () {
 		this.siteUrl = this.$store.getters['prods/siteUrl']
-		this.selectedProduct = this.$store.getters['prods/getProducts'].find(product => product.id === this.id)
+		this.selectedProduct = await this.$store.getters['prods/getProducts'].find(product => product.id === this.id)
 		if (this.selectedProduct === undefined) {
 			this.loadProduct()
+		} else {
+			console.log(this.selectedProduct)
+			this.getSrc()
 		}
 	},
 	methods: {
+		getSrc () {
+		if (this.selectedProduct.images.length > 0) {
+			this.src = `${this.siteUrl}/uploads/${this.selectedProduct.images[0].img}`
+		} else {
+			this.src = require('../assets/default-product-image.png')
+		}
+	},
 		async loadProduct () {
 			this.isLoading = true
 			try {
 			this.selectedProduct = await this.$store.dispatch('prods/loadProduct', { id: this.id })
+			this.getSrc()
 			} catch (error) {
 				this.error = error.message || 'something went wrong!'
 			}
@@ -70,7 +86,13 @@ export default {
 		},
 		handleError () {
 			this.error = null
-			}
+			},
+		defaultImage (e) {
+		e.target.src = require('../assets/default-product-image.png')
+		},
+		editProduct () {
+		return '/editProduct/' + this.id
+		}
 	}
 }
 </script>

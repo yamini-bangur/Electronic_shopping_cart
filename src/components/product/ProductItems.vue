@@ -1,7 +1,7 @@
 <template>
   <div id="box">
     <base-button link :to="productDetail()">
-      <img :src="src" @load="loadImage"  />
+      <img :src="src"  @error="defaultImage" />
       </base-button
     >
     <div id="details">
@@ -13,20 +13,22 @@
     </div>
 
     <base-button>Add to cart</base-button>
+	<base-button :to="editProduct()" mode="flat" link> <i class="fas fa-edit editProduct"></i></base-button>
+	<base-button  mode="flat" @click="deleteProduct"> <i class="fas fa-trash-alt "></i></base-button>
   </div>
 </template>
 <script>
 import BaseButton from '../UI/BaseButton.vue'
 export default {
+	emits: ['delete-Product'],
   components: { BaseButton },
   props: ['id', 'images', 'productName', 'brand', 'price'],
   data () {
     return {
       link: true,
       isLoading: false,
-      src: `https://electronics-shopping.herokuapp.com/uploads/${this.images[0].img}`,
-      error: null,
-      isLoaded: false
+      src: '',
+      error: null
     }
   },
   watch: {
@@ -34,16 +36,30 @@ export default {
 		this.src = newVal
     }
   },
+  created () {
+		this.getSrc()
+  },
   methods: {
-    productDetail () {
+
+	getSrc () {
+		if (this.images.length > 0) {
+			this.src = `https://electronics-shopping.herokuapp.com/uploads/${this.images[0].img}`
+		} else {
+			this.defaultImage()
+		}
+	},
+    editProduct () {
+      return '/editProduct/' + this.id
+	},
+	productDetail () {
       return '/products/' + this.id
-    },
-    loadImage () {
-      this.isLoaded = true
     },
     defaultImage () {
 		this.src = require('../../assets/default-product-image.png')
-		}
+		},
+	deleteProduct () {
+		this.$emit('delete-Product')
+	}
   }
 }
 </script>
