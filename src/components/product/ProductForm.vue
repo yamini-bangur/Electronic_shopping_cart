@@ -1,4 +1,5 @@
 <template>
+	<div>
 		<base-dialog :show="!!error" title="An error occurred!" @close="handleError">
 			<p>{{ error }}</p>
 		</base-dialog>
@@ -22,6 +23,7 @@
 		</div>
 		<base-button>Save</base-button>
 	</form>
+	</div>
 </template>
 <script>
 import BaseButton from '../UI/BaseButton.vue'

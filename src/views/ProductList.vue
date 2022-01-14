@@ -1,4 +1,5 @@
 <template>
+	<div>
   <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
     <p>{{ error }}</p>
   </base-dialog>
@@ -33,6 +34,7 @@
       @nextPage="pageChangeHandle('next')"
       @previousPage="pageChangeHandle('previous')"
 		@loadPage="pageChangeHandle" />
+  </div>
   </div>
 </template>
 <script>
