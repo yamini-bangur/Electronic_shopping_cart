@@ -20,7 +20,7 @@
 <script>
 import BaseButton from '../UI/BaseButton.vue'
 export default {
-	emits: ['delete-Product'],
+	emits: ['delete-Product', 'show-pagination'],
   components: { BaseButton },
   props: ['id', 'images', 'productName', 'brand', 'price'],
   data () {
@@ -38,6 +38,9 @@ export default {
   },
   created () {
 		this.getSrc()
+  },
+  mounted () {
+	  this.showPagination()
   },
   methods: {
 
@@ -59,6 +62,9 @@ export default {
 		},
 	deleteProduct () {
 		this.$emit('delete-Product')
+	},
+	showPagination () {
+		this.$emit('show-pagination')
 	}
   }
 }

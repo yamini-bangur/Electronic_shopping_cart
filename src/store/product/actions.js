@@ -22,7 +22,7 @@ export default {
 			}
 			products.push(product)
 		}
-		context.commit('setProducts', products)
+		context.commit('setProducts', {products: products , total_count: responseData.total_count , total_row: responseData.total_row})
 	},
 	async loadProduct (context, payload) {
 		const siteUrl = context.getters.siteUrl

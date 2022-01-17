@@ -9,7 +9,9 @@ export default {
 	actions,
 	state () {
         return {
-			products: []
+			products: [],
+			total_row: 0,
+			total_count: 0
         }
     }
 }

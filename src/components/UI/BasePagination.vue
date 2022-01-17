@@ -36,7 +36,8 @@ export default {
     },
     pageCount: {
       type: Number,
-      required: true
+	  required: true,
+	  default:5
 	},
 	visiblePagesCount: {
       type: Number,
@@ -53,9 +54,14 @@ export default {
 	paginationTriggers () {
         const currentPage = this.currentPage
         const pageCount = this.pageCount
-        const visiblePagesCount = this.visiblePagesCount
-        const visiblePagesThreshold = (visiblePagesCount - 1) / 2
-		const pagintationTriggersArray = Array(this.visiblePagesCount - 1).fill(0)
+        const visiblePagesCount = (this.pageCount > 5)?this.visiblePagesCount: this.pageCount
+		const visiblePagesThreshold = (visiblePagesCount - 1) / 2
+		let pagintationTriggersArray
+		if (this.pageCount > 5) {
+			 pagintationTriggersArray = Array(this.visiblePagesCount - 1).fill(0)
+		}else {
+			 pagintationTriggersArray = Array(this.pageCount - 1 ).fill(0)
+		}
 		if (currentPage <= visiblePagesThreshold + 1) {
 			pagintationTriggersArray[0] = 1
 			const pagintationTriggers = pagintationTriggersArray.map(

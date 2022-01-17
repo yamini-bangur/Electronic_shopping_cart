@@ -24,10 +24,11 @@
         :brand="product.brand"
         :price="product.price"
 		@delete-Product="deleteProduct(index)"
+		@show-pagination="showPagination"
       ></product-items>
 
     </div>
-	<BasePagination
+	<BasePagination v-if="isPaginationLoad"
       :current-page="currentPage"
       :page-count="pageCount"
       class="product_list"
@@ -59,7 +60,8 @@ export default {
 		deleteSuccessMsg: '',
 		itemPerPage: 3,
 		currentPage: 1,
-		pageCount: 0
+		pageCount: 5,
+		isPaginationLoad: false
     }
   },
   computed: {
@@ -81,12 +83,16 @@ export default {
 //     }
 //   },
   methods: {
+	  showPagination () {
+		  this.isPaginationLoad = true;
+	  },
     async loadProducts () {
       this.isLoading = true
       try {
 		await this.$store.dispatch('prods/loadProducts', { page: this.currentPage - 1, limit: this.itemPerPage })
+		const totalCount = (this.$store.getters['prods/getProductCount'])
 		this.pageCount = Math.ceil(
-        10 / this.itemPerPage)
+		totalCount / this.itemPerPage)
       } catch (error) {
         this.error = error.message || 'something went wrong!'
       }
