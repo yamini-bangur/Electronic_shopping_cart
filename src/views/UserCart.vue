@@ -1,19 +1,23 @@
 <template>
+<div id="mainContainer">
   <section>
-    <h2>Your Cart</h2>
+    <h1>Your Cart</h1>
     <h3>Total Amount: <base-badge mode="elegant">${{ cartTotal }}</base-badge></h3>
-    <ul>
-      <cart-item
-        v-for="item in cartItems"
-        :key="item.productId"
-        :prod-id="item.productId"
-        :title="item.title"
-        :image="item.image"
-        :price="item.price"
-        :qty="item.qty"
-      ></cart-item>
-    </ul>
+	 <div id="containerClothing">
+		<ul>
+		<cart-item
+			v-for="item in cartItems"
+			:key="item.id"
+			:prod-id="item.id"
+			:title="item.productName"
+			:images="item.images"
+			:price="item.price"
+			:qty="item.qty"
+		></cart-item>
+		</ul>
+	</div>
   </section>
+</div>
 </template>
 
 <script>
@@ -39,7 +43,14 @@ section {
   margin: 2rem auto;
   max-width: 40rem;
 }
-
+h1 {
+  width: 90%;
+  margin: auto;
+  padding: 110px 0 50px 0;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
 h2 {
   color: #292929;
   text-align: center;
@@ -55,5 +66,12 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+#containerClothing {
+  grid-gap: 70px 20px;
+  grid-template-columns: repeat(5, 1fr);
+  width: 90%;
+  margin: auto;
+  padding-bottom: 40px;
 }
 </style>

@@ -11,7 +11,7 @@ export default {
 		  const newItem = {
 			productId: productData.id,
 			title: productData.title,
-			image: productData.image,
+			images: productData.images,
 			price: productData.price,
 			qty: 1,
 		  };

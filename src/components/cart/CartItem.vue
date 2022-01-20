@@ -1,7 +1,7 @@
 <template>
   <li>
     <div>
-      <img :src="image" :alt="title" />
+      <img :src="src" :alt="title"  @error="defaultImage"  />
     </div>
     <div>
       <h3>{{ title }}</h3>
@@ -23,16 +23,36 @@
 
 <script>
 export default {
-  props: ['prodId', 'title', 'image', 'price', 'qty'],
+  props: ['prodId', 'title', 'images', 'price', 'qty'],
+  data () {
+	  return {
+		  src: ''
+	  }
+  },
   computed: {
     itemTotal() {
       return (this.price * this.qty).toFixed(2);
     },
   },
+  created () {
+		this.getSrc()
+  },
   methods: {
+	  getSrc () {
+		  console.log(this);
+		if (this.images.length > 0) {
+			this.src = `https://electronics-shopping.herokuapp.com/uploads/${this.images[0].img}`
+		} else {
+			this.defaultImage()
+		}
+		console.log(this.src);
+	},
     remove() {
       this.$store.dispatch('cart/removeFromCart', { productId: this.prodId });
-    },
+	},
+	 defaultImage () {
+		this.src = require('../../assets/default-product-image.png')
+		},
   },
 };
 </script>
