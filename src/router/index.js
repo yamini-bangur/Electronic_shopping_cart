@@ -3,6 +3,7 @@ import ProductList from '../views/ProductList.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import EditProduct from '../views/EditProduct.vue'
 import AddProduct from '../views/AddProduct.vue'
+import UserCart from '../views/UserCart.vue'
 const routes = [
   {
     path: '/',
@@ -26,7 +27,11 @@ const routes = [
 		path: '/editProduct/:id',
 		props: true,
 		component: EditProduct
-		}
+	},
+	{
+		path: '/cart/',
+		component: UserCart
+	},
 
 ]
 const router = createRouter({

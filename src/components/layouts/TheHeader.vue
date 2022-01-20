@@ -15,7 +15,7 @@
                     </div>
                     <!-- USER SECTION (CART AND USER ICON) -->
                     <div id="user">
-                        <router-link to="/cart"> <i class="fas fa-shopping-cart addedToCart"><div id="badge"> {{itemInCart}} </div></i></router-link>
+                        <router-link to="/cart"> <i class="fas fa-shopping-cart addedToCart"><div id="badge"> {{cartTotal}} </div></i></router-link>
                     </div>
             </div>
 
@@ -27,6 +27,11 @@ export default {
     return {
       title: 'E-Store',
       itemInCart: 0
+    }
+  },
+  computed: {
+	  cartTotal() {
+      return this.$store.getters['cart/quantity'];
     }
   }
 }

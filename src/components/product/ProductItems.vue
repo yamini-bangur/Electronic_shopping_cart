@@ -12,7 +12,7 @@
       <h2>$ {{ price }}</h2>
     </div>
 
-    <base-button>Add to cart</base-button>
+    <base-button @click="addToCart">Add to cart</base-button>
 	<base-button :to="editProduct()" mode="flat" link> <i class="fas fa-edit editProduct"></i></base-button>
 	<base-button  mode="flat" @click="deleteProduct"> <i class="fas fa-trash-alt "></i></base-button>
   </div>
@@ -51,6 +51,11 @@ export default {
 			this.defaultImage()
 		}
 	},
+	addToCart() {
+      this.$store.dispatch('cart/addToCart', {
+        id: this.id,
+      });
+    },
     editProduct () {
       return '/editProduct/' + this.id
 	},
