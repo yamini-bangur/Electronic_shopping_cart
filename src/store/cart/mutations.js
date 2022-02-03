@@ -19,8 +19,12 @@ export default {
 		}
 		state.qty++;
 		state.total += productData.price;
+		localStorage.setItem("items", JSON.stringify(state.items));
+		localStorage.setItem("total", state.total);
+		localStorage.setItem("qty", state.qty);
 	  },
 	  removeProductFromCart(state, payload) {
+		  console.log(payload)
 		const prodId = payload.productId;
 		const productInCartIndex = state.items.findIndex(
 		  (cartItem) => cartItem.productId === prodId
@@ -29,5 +33,8 @@ export default {
 		state.items.splice(productInCartIndex, 1);
 		state.qty -= prodData.qty;
 		state.total -= prodData.price * prodData.qty;
+		localStorage.setItem("items", JSON.stringify(state.items));
+		localStorage.setItem("total", state.total);
+		localStorage.setItem("qty", state.qty);
 	  },
 }
